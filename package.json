@@ -1,0 +1,57 @@
+{
+  "name": "n8n-nodes-cloudinary",
+  "version": "0.0.1",
+  "description": "n8n node to interact with Cloudinary - upload media, update asset tags and metadata, and more",
+  "keywords": [
+    "n8n-community-node-package",
+    "cloudinary",
+    "image-upload",
+    "media-management",
+    "tags",
+    "metadata",
+    "cloud-storage"
+  ],
+  "license": "MIT",
+  "homepage": "https://cloudinary.com/documentation",
+  "author": {
+    "name": "Cloudinary"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cloudinary/cloudinary-n8n.git"
+  },
+  "engines": {
+    "node": ">=22.16"
+  },
+  "scripts": {
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "format": "prettier nodes credentials --write",
+    "lint": "eslint nodes credentials package.json",
+    "lintfix": "eslint nodes credentials package.json --fix",
+    "prepublishOnly": "npm build && npm lint -c .eslintrc.prepublish.js nodes credentials package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/CloudinaryApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Cloudinary/Cloudinary.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "~8.32.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.3",
+    "gulp": "^5.0.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}

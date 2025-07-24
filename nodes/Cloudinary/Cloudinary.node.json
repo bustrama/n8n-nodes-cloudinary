@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-base.cloudinary",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Media", "Data & Storage"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://cloudinary.com/documentation/image_upload_api_reference"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://cloudinary.com/documentation/upload_images"
+			}
+		]
+	}
+} 
