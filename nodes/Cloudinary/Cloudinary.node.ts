@@ -9,6 +9,7 @@ import {
 	ApplicationError
 } from 'n8n-workflow';
 import { createHash } from 'crypto';
+import FormData from 'form-data';
 
 /**
  * Generate Cloudinary signature for signed uploads
@@ -574,20 +575,19 @@ export class Cloudinary implements INodeType {
 					const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`;
 
 					// Use FormData for multipart upload
-					const FormData = require('form-data');
 					const formData = new FormData();
-					
+
 					// Append the file data
 					formData.append('file', dataBuffer, {
 						filename: binaryData.fileName || 'file',
 						contentType: binaryData.mimeType || 'application/octet-stream',
 					});
-					
+
 					// Append other parameters
 					formData.append('api_key', apiKey);
 					formData.append('timestamp', timestamp.toString());
 					formData.append('signature', signature);
-					
+
 					// Append additional fields
 					for (const key in additionalFields) {
 						formData.append(key, additionalFields[key] as string);
