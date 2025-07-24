@@ -6,6 +6,7 @@ import {
 	IDataObject,
 	INodeExecutionData,
 	IHttpRequestOptions,
+	ApplicationError
 } from 'n8n-workflow';
 import { createHash } from 'crypto';
 
@@ -83,7 +84,7 @@ export class Cloudinary implements INodeType {
 				},
 				options: [
 					{
-						name: 'Upload from URL',
+						name: 'Upload From URL',
 						value: 'uploadUrl',
 						description: 'Upload an asset from URL',
 						action: 'Upload an asset from URL',
@@ -318,8 +319,7 @@ export class Cloudinary implements INodeType {
 				name: 'structuredMetadata',
 				type: 'json',
 				default: '{}',
-				description:
-					'Structured metadata to attach to the asset as JSON. Example: {"field1": "value1", "field2": "value2"}',
+				description: 'Structured metadata to attach to the asset as JSON. Example: {"field1": "value1", "field2": "value2"}.',
 				required: true,
 				displayOptions: {
 					show: {
@@ -387,7 +387,7 @@ export class Cloudinary implements INodeType {
 				},
 			},
 			{
-				displayName: 'Update Options',
+				displayName: 'Update Fields',
 				name: 'updateOptions',
 				type: 'collection',
 				placeholder: 'Add Option',
@@ -728,7 +728,7 @@ export class Cloudinary implements INodeType {
 					try {
 						metadata = typeof structuredMetadata === 'object' ? structuredMetadata : JSON.parse(structuredMetadata);
 					} catch (error) {
-						throw new Error('Invalid JSON for structured metadata');
+						throw new ApplicationError('Invalid JSON for structured metadata');
 					}
 
 					// Convert metadata object to pipe-separated string format expected by Cloudinary
