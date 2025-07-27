@@ -1,10 +1,3 @@
----
-#https://www.notion.so/n8n/Frontmatter-432c2b8dff1f43d4b1c8d20075510fe4
-title: Cloudinary node documentation
-description: Learn how to use the Cloudinary node in n8n. Follow technical documentation to integrate Cloudinary node into your workflows.
-contentType: [integration, reference]
----
-
 # Cloudinary node
 
 Use the Cloudinary node to automate work in Cloudinary, and integrate Cloudinary with other applications. n8n has built-in support for a wide range of Cloudinary features, including uploading assets, managing tags, and updating metadata.
