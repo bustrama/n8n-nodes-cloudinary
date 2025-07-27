@@ -535,6 +535,7 @@ export class Cloudinary implements INodeType {
 						body: params,
 						headers: {
 							'Content-Type': 'application/x-www-form-urlencoded',
+							'User-Agent': 'n8n/1.0',
 						},
 					};
 
@@ -601,6 +602,7 @@ export class Cloudinary implements INodeType {
 						body: formData,
 						headers: {
 							...formData.getHeaders(),
+							'User-Agent': 'n8n/1.0',
 						},
 					};
 
@@ -636,6 +638,7 @@ export class Cloudinary implements INodeType {
 						qs: queryParams,
 						headers: {
 							'Content-Type': 'application/json',
+							'User-Agent': 'n8n/1.0',
 						},
 						auth: {
 							username: apiKey,
@@ -662,6 +665,7 @@ export class Cloudinary implements INodeType {
 						url: metadataUrl,
 						headers: {
 							'Content-Type': 'application/json',
+							'User-Agent': 'n8n/1.0',
 						},
 						auth: {
 							username: apiKey,
@@ -701,6 +705,7 @@ export class Cloudinary implements INodeType {
 						body: body,
 						headers: {
 							'Content-Type': 'application/json',
+							'User-Agent': 'n8n/1.0',
 						},
 						auth: {
 							username: apiKey,
@@ -758,6 +763,7 @@ export class Cloudinary implements INodeType {
 						body: body,
 						headers: {
 							'Content-Type': 'application/json',
+							'User-Agent': 'n8n/1.0',
 						},
 						auth: {
 							username: apiKey,
