@@ -8,8 +8,8 @@ import {
 	IHttpRequestOptions,
 	ApplicationError
 } from 'n8n-workflow';
-import { createHash } from 'crypto';
 import FormData from 'form-data';
+import { sha256 } from './sha256.utils';
 
 /**
  * Generate Cloudinary signature for signed uploads
@@ -26,9 +26,10 @@ function generateCloudinarySignature(params: IDataObject, apiSecret: string): st
 
 	// Append API secret
 	const stringToSign = `${sortedParams}${apiSecret}`;
+	console.log('im here', stringToSign);
 
-	// Generate SHA1 hash
-	return createHash('sha1').update(stringToSign).digest('hex');
+	// Generate SHA1 hash using pure JavaScript implementation
+	return sha256(stringToSign);
 }
 
 export class Cloudinary implements INodeType {
@@ -773,6 +774,7 @@ export class Cloudinary implements INodeType {
 					});
 				}
 			} catch (error) {
+				console.log(error);
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: {

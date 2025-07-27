@@ -13,7 +13,9 @@
   ],
   "license": "MIT",
   "homepage": "https://cloudinary.com/documentation",
-  "author": "Cloudinary",
+  "author": {
+    "name": "Cloudinary"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/cloudinary/n8n-nodes-cloudinary.git"
