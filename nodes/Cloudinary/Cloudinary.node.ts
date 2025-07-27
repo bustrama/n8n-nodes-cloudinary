@@ -8,29 +8,9 @@ import {
 	IHttpRequestOptions,
 	ApplicationError
 } from 'n8n-workflow';
-import FormData from 'form-data';
-import { sha256 } from './sha256.utils';
+import { generateCloudinarySignature, createMultipartBody } from './cloudinary.utils';
 
-/**
- * Generate Cloudinary signature for signed uploads
- */
-function generateCloudinarySignature(params: IDataObject, apiSecret: string): string {
-	// Remove signature, api_key, and file from params for signature generation
-	const { signature, api_key, file, ...paramsToSign } = params;
 
-	// Sort parameters alphabetically and create query string
-	const sortedParams = Object.keys(paramsToSign)
-		.sort()
-		.map((key) => `${key}=${paramsToSign[key]}`)
-		.join('&');
-
-	// Append API secret
-	const stringToSign = `${sortedParams}${apiSecret}`;
-	console.log('im here', stringToSign);
-
-	// Generate SHA1 hash using pure JavaScript implementation
-	return sha256(stringToSign);
-}
 
 export class Cloudinary implements INodeType {
 	description: INodeTypeDescription = {
@@ -576,32 +556,33 @@ export class Cloudinary implements INodeType {
 					// Prepare the URL for upload
 					const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`;
 
-					// Use FormData for multipart upload
-					const formData = new FormData();
+					// Prepare fields for multipart form data
+					const fields: Record<string, string> = {
+						api_key: apiKey,
+						timestamp: timestamp.toString(),
+						signature: signature,
+					};
 
-					// Append the file data
-					formData.append('file', dataBuffer, {
-						filename: binaryData.fileName || 'file',
-						contentType: binaryData.mimeType || 'application/octet-stream',
-					});
-
-					// Append other parameters
-					formData.append('api_key', apiKey);
-					formData.append('timestamp', timestamp.toString());
-					formData.append('signature', signature);
-
-					// Append additional fields
+					// Add additional fields
 					for (const key in additionalFields) {
-						formData.append(key, additionalFields[key] as string);
+						fields[key] = additionalFields[key] as string;
 					}
+
+					// Create multipart body
+					const { body, boundary } = createMultipartBody(
+						fields,
+						dataBuffer,
+						binaryData.fileName || 'file',
+						binaryData.mimeType || 'application/octet-stream'
+					);
 
 					// Set up the request
 					const options: IHttpRequestOptions = {
 						method: 'POST',
 						url: uploadUrl,
-						body: formData,
+						body: body,
 						headers: {
-							...formData.getHeaders(),
+							'Content-Type': `multipart/form-data; boundary=${boundary}`,
 							'User-Agent': 'n8n/1.0',
 						},
 					};
