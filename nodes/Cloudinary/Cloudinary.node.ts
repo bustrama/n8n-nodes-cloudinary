@@ -761,7 +761,6 @@ export class Cloudinary implements INodeType {
 					});
 				}
 			} catch (error) {
-				console.log(error);
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: {
