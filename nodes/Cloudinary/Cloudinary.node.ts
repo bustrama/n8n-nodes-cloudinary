@@ -7,7 +7,7 @@ import {
 	INodeExecutionData,
 	IHttpRequestOptions,
 	ApplicationError,
-  NodeOperationError
+	NodeOperationError
 } from 'n8n-workflow';
 import { generateCloudinarySignature, createMultipartBody } from './cloudinary.utils';
 
