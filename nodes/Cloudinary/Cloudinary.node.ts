@@ -6,7 +6,8 @@ import {
 	IDataObject,
 	INodeExecutionData,
 	IHttpRequestOptions,
-	ApplicationError
+	ApplicationError,
+	NodeOperationError
 } from 'n8n-workflow';
 import { generateCloudinarySignature, createMultipartBody } from './cloudinary.utils';
 
@@ -103,6 +104,12 @@ export class Cloudinary implements INodeType {
 						description: 'Update structured metadata for an existing asset',
 						action: 'Update asset structured metadata',
 					},
+					{
+						name: 'Destroy',
+						value: 'destroy',
+						description: 'Delete an asset by public_id',
+						action: 'Destroy an asset',
+					}, // destructive — deletes asset
 				],
 				default: 'updateTags',
 			},
@@ -307,6 +314,91 @@ export class Cloudinary implements INodeType {
 					show: {
 						resource: ['updateAsset'],
 						operation: ['updateMetadata'],
+					},
+				},
+			},
+			{
+				displayName: 'Public ID',
+				name: 'public_id',
+				type: 'string',
+				default: '',
+				description: 'Public ID of the asset to delete',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['updateAsset'],
+						operation: ['destroy'],
+					},
+				},
+			},
+			{
+				displayName: 'Resource Type',
+				name: 'resource_type',
+				type: 'options',
+				options: [
+					{
+						name: 'Image',
+						value: 'image',
+					},
+					{
+						name: 'Video',
+						value: 'video',
+					},
+					{
+						name: 'Raw',
+						value: 'raw',
+					},
+				],
+				default: 'image',
+				description: 'The type of asset to delete',
+				displayOptions: {
+					show: {
+						resource: ['updateAsset'],
+						operation: ['destroy'],
+					},
+				},
+			},
+			{
+				displayName: 'Type',
+				name: 'type',
+				type: 'options',
+				options: [
+					{
+						name: 'Upload',
+						value: 'upload',
+					},
+					{
+						name: 'Authenticated',
+						value: 'authenticated',
+					},
+					{
+						name: 'Private',
+						value: 'private',
+					},
+					{
+						name: 'Fetch',
+						value: 'fetch',
+					},
+				],
+				default: 'upload',
+				description: 'Delivery type of the asset',
+				displayOptions: {
+					show: {
+						resource: ['updateAsset'],
+						operation: ['destroy'],
+					},
+				},
+			},
+			{
+				displayName: 'Invalidate CDN',
+				name: 'invalidate',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to invalidate cached CDN copies of the asset',
+				displayOptions: {
+					show: {
+						resource: ['updateAsset'],
+						operation: ['destroy'],
 					},
 				},
 			},
@@ -757,6 +849,71 @@ export class Cloudinary implements INodeType {
 
 					returnData.push({
 						json: response,
+						pairedItem: i,
+					});
+				}
+
+				if (resource === 'updateAsset' && operation === 'destroy') {
+					const publicId = this.getNodeParameter('public_id', i) as string;
+					const resourceType = this.getNodeParameter('resource_type', i) as string;
+					const type = this.getNodeParameter('type', i) as string;
+					const invalidate = this.getNodeParameter('invalidate', i, false) as boolean;
+
+					const body: IDataObject = {
+						public_id: publicId,
+						type,
+						invalidate,
+					};
+
+					const destroyUrl = `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/destroy`;
+
+					const options: IHttpRequestOptions = {
+						method: 'POST',
+						url: destroyUrl,
+						body,
+						headers: {
+							'Content-Type': 'application/json',
+							'User-Agent': 'n8n/1.0',
+						},
+						auth: {
+							username: apiKey,
+							password: apiSecret,
+						},
+					};
+
+					const response = await this.helpers.httpRequest(options);
+
+					if (response.result !== 'ok') {
+						if (this.continueOnFail()) {
+							returnData.push({
+								json: {
+									public_id: publicId,
+									result: response.result,
+									resource_type: resourceType,
+									type,
+									invalidated: false,
+									_raw: response,
+								},
+								pairedItem: i,
+							});
+							continue;
+						}
+						throw new NodeOperationError(
+							this.getNode(),
+							`Cloudinary error: ${response.result}`,
+							{ itemIndex: i },
+						);
+					}
+
+					returnData.push({
+						json: {
+							public_id: publicId,
+							result: response.result,
+							resource_type: resourceType,
+							type,
+							invalidated: invalidate,
+							_raw: response,
+						},
 						pairedItem: i,
 					});
 				}
