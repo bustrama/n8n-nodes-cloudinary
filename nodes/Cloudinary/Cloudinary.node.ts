@@ -4,10 +4,10 @@ import {
 	NodeConnectionType,
 	IExecuteFunctions,
 	IDataObject,
-  INodeExecutionData,
-  IHttpRequestOptions,
-  ApplicationError,
-  NodeOperationError,
+	INodeExecutionData,
+	IHttpRequestOptions,
+	ApplicationError,
+  NodeOperationError
 } from 'n8n-workflow';
 import { generateCloudinarySignature, createMultipartBody } from './cloudinary.utils';
 
