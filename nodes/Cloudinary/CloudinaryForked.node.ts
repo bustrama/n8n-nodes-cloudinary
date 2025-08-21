@@ -13,27 +13,27 @@ import { generateCloudinarySignature, createMultipartBody } from './cloudinary.u
 
 
 
-export class Cloudinary implements INodeType {
-	description: INodeTypeDescription = {
-		displayName: 'Cloudinary',
-		name: 'cloudinary',
-		icon: 'file:cloudinary.svg',
-		group: ['Cloudinary'],
-		version: 1,
-		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Upload to Cloudinary',
-		defaults: {
-			name: 'Cloudinary',
-		},
-		inputs: [NodeConnectionType.Main],
-		outputs: [NodeConnectionType.Main],
-		credentials: [
-			{
-				name: 'cloudinaryApi',
-				required: true,
-			},
-		],
-		properties: [
+export class CloudinaryForked implements INodeType {
+        description: INodeTypeDescription = {
+                displayName: 'Cloudinary Forked',
+                name: 'cloudinaryForked',
+                icon: 'file:cloudinary.svg',
+                group: ['Cloudinary'],
+                version: 1,
+                subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
+                description: 'Upload to Cloudinary',
+                defaults: {
+                        name: 'Cloudinary Forked',
+                },
+                inputs: [NodeConnectionType.Main],
+                outputs: [NodeConnectionType.Main],
+                credentials: [
+                        {
+                                name: 'cloudinaryForkedApi',
+                                required: true,
+                        },
+                ],
+                properties: [
 			{
 				displayName: 'Resource',
 				name: 'resource',
@@ -569,7 +569,7 @@ export class Cloudinary implements INodeType {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 
-		const credentials = await this.getCredentials('cloudinaryApi');
+                const credentials = await this.getCredentials('cloudinaryForkedApi');
 		const cloudName = credentials.cloudName as string;
 		const apiKey = credentials.apiKey as string;
 		const apiSecret = credentials.apiSecret as string;

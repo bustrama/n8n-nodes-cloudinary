@@ -1,6 +1,6 @@
-# Cloudinary node
+# Cloudinary node (Forked)
 
-Use the Cloudinary node to automate work in Cloudinary, and integrate Cloudinary with other applications. n8n has built-in support for a wide range of Cloudinary features, including uploading assets, managing tags, and updating metadata.
+Use the Cloudinary Forked node to automate work in Cloudinary, and integrate Cloudinary with other applications. n8n has built-in support for a wide range of Cloudinary features, including uploading assets, managing tags, and updating metadata.
 
 On this page, you'll find a list of operations the Cloudinary node supports.
 

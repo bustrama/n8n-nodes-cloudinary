@@ -6,9 +6,9 @@ import {
 } from 'n8n-workflow';
 
 export class CloudinaryApi implements ICredentialType {
-	name = 'cloudinaryApi';
-	displayName = 'Cloudinary API';
-	documentationUrl = 'https://cloudinary.com/documentation/image_upload_api_reference';
+        name = 'cloudinaryForkedApi';
+        displayName = 'Cloudinary Forked API';
+        documentationUrl = 'https://cloudinary.com/documentation/image_upload_api_reference';
 	properties: INodeProperties[] = [
 		{
 			displayName: 'Cloud Name',
