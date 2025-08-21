@@ -1,5 +1,5 @@
 {
-  "name": "n8n-nodes-cloudinary",
+  "name": "n8n-nodes-cloudinary-forked",
   "version": "0.0.5",
   "description": "The official Cloudinary n8n node - upload media, update asset tags and metadata, and more",
   "keywords": [
@@ -40,7 +40,7 @@
       "dist/credentials/CloudinaryApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/Cloudinary/Cloudinary.node.js"
+      "dist/nodes/Cloudinary/CloudinaryForked.node.js"
     ]
   },
   "devDependencies": {
