@@ -7,12 +7,12 @@ On this page, you'll find a list of operations the Cloudinary node supports.
 ## Operations
 
 * Asset
-        * Upload from URL/file
-        * Update asset tags
-        * Update asset metadata fields
-        * Get tags
-        * Get structured metadata definitions
-        * Destroy asset (destructive — deletes asset)
+    * Upload from URL/file
+    * Update asset tags
+    * Update asset metadata fields
+    * Get tags
+    * Get structured metadata definitions
+    * Destroy asset (destructive — deletes asset)
 
 ## Supported authentication methods
 

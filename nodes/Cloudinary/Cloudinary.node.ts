@@ -4,10 +4,10 @@ import {
 	NodeConnectionType,
 	IExecuteFunctions,
 	IDataObject,
-        INodeExecutionData,
-        IHttpRequestOptions,
-        ApplicationError,
-        NodeOperationError,
+  INodeExecutionData,
+  IHttpRequestOptions,
+  ApplicationError,
+  NodeOperationError,
 } from 'n8n-workflow';
 import { generateCloudinarySignature, createMultipartBody } from './cloudinary.utils';
 
@@ -98,21 +98,21 @@ export class Cloudinary implements INodeType {
 						description: 'Update tags for an existing asset',
 						action: 'Update asset tags',
 					},
-                                        {
-                                                name: 'Update Asset Structured Metadata',
-                                                value: 'updateMetadata',
-                                                description: 'Update structured metadata for an existing asset',
-                                                action: 'Update asset structured metadata',
-                                        },
-                                        {
-                                                name: 'Destroy',
-                                                value: 'destroy',
-                                                description: 'Delete an asset by public_id',
-                                                action: 'Destroy an asset',
-                                        }, // destructive — deletes asset
-                                ],
-                                default: 'updateTags',
-                        },
+          {
+                  name: 'Update Asset Structured Metadata',
+                  value: 'updateMetadata',
+                  description: 'Update structured metadata for an existing asset',
+                  action: 'Update asset structured metadata',
+          },
+          {
+                  name: 'Destroy',
+                  value: 'destroy',
+                  description: 'Delete an asset by public_id',
+                  action: 'Destroy an asset',
+          }, // destructive — deletes asset
+        ],
+        default: 'updateTags',
+      },
 			{
 				displayName: 'Operation',
 				name: 'operation',
@@ -303,109 +303,109 @@ export class Cloudinary implements INodeType {
 					},
 				},
 			},
-                        {
-                                displayName: 'Structured Metadata',
-                                name: 'structuredMetadata',
-                                type: 'json',
-                                default: '{}',
-                                description: 'Structured metadata to attach to the asset as JSON. Example: {"field1": "value1", "field2": "value2"}.',
-                                required: true,
-                                displayOptions: {
-                                        show: {
-                                                resource: ['updateAsset'],
-                                                operation: ['updateMetadata'],
-                                        },
-                                },
-                        },
-                        {
-                                displayName: 'Public ID',
-                                name: 'public_id',
-                                type: 'string',
-                                default: '',
-                                description: 'Public ID of the asset to delete',
-                                required: true,
-                                displayOptions: {
-                                        show: {
-                                                resource: ['updateAsset'],
-                                                operation: ['destroy'],
-                                        },
-                                },
-                        },
-                        {
-                                displayName: 'Resource Type',
-                                name: 'resource_type',
-                                type: 'options',
-                                options: [
-                                        {
-                                                name: 'Image',
-                                                value: 'image',
-                                        },
-                                        {
-                                                name: 'Video',
-                                                value: 'video',
-                                        },
-                                        {
-                                                name: 'Raw',
-                                                value: 'raw',
-                                        },
-                                ],
-                                default: 'image',
-                                description: 'The type of asset to delete',
-                                displayOptions: {
-                                        show: {
-                                                resource: ['updateAsset'],
-                                                operation: ['destroy'],
-                                        },
-                                },
-                        },
-                        {
-                                displayName: 'Type',
-                                name: 'type',
-                                type: 'options',
-                                options: [
-                                        {
-                                                name: 'Upload',
-                                                value: 'upload',
-                                        },
-                                        {
-                                                name: 'Authenticated',
-                                                value: 'authenticated',
-                                        },
-                                        {
-                                                name: 'Private',
-                                                value: 'private',
-                                        },
-                                        {
-                                                name: 'Fetch',
-                                                value: 'fetch',
-                                        },
-                                ],
-                                default: 'upload',
-                                description: 'Delivery type of the asset',
-                                displayOptions: {
-                                        show: {
-                                                resource: ['updateAsset'],
-                                                operation: ['destroy'],
-                                        },
-                                },
-                        },
-                        {
-                                displayName: 'Invalidate CDN',
-                                name: 'invalidate',
-                                type: 'boolean',
-                                default: false,
-                                description: 'Whether to invalidate cached CDN copies of the asset',
-                                displayOptions: {
-                                        show: {
-                                                resource: ['updateAsset'],
-                                                operation: ['destroy'],
-                                        },
-                                },
-                        },
-                        {
-                                displayName: 'Resource Type',
-                                name: 'getTagsResourceType',
-                                type: 'options',
+      {
+        displayName: 'Structured Metadata',
+        name: 'structuredMetadata',
+        type: 'json',
+        default: '{}',
+        description: 'Structured metadata to attach to the asset as JSON. Example: {"field1": "value1", "field2": "value2"}.',
+        required: true,
+        displayOptions: {
+                show: {
+                        resource: ['updateAsset'],
+                        operation: ['updateMetadata'],
+                },
+        },
+      },
+      {
+        displayName: 'Public ID',
+        name: 'public_id',
+        type: 'string',
+        default: '',
+        description: 'Public ID of the asset to delete',
+        required: true,
+        displayOptions: {
+                show: {
+                        resource: ['updateAsset'],
+                        operation: ['destroy'],
+                },
+        },
+      },
+      {
+        displayName: 'Resource Type',
+        name: 'resource_type',
+        type: 'options',
+        options: [
+                {
+                        name: 'Image',
+                        value: 'image',
+                },
+                {
+                        name: 'Video',
+                        value: 'video',
+                },
+                {
+                        name: 'Raw',
+                        value: 'raw',
+                },
+        ],
+        default: 'image',
+        description: 'The type of asset to delete',
+        displayOptions: {
+                show: {
+                        resource: ['updateAsset'],
+                        operation: ['destroy'],
+                },
+        },
+      },
+      {
+        displayName: 'Type',
+        name: 'type',
+        type: 'options',
+        options: [
+                {
+                        name: 'Upload',
+                        value: 'upload',
+                },
+                {
+                        name: 'Authenticated',
+                        value: 'authenticated',
+                },
+                {
+                        name: 'Private',
+                        value: 'private',
+                },
+                {
+                        name: 'Fetch',
+                        value: 'fetch',
+                },
+        ],
+        default: 'upload',
+        description: 'Delivery type of the asset',
+        displayOptions: {
+                show: {
+                        resource: ['updateAsset'],
+                        operation: ['destroy'],
+                },
+        },
+      },
+      {
+        displayName: 'Invalidate CDN',
+        name: 'invalidate',
+        type: 'boolean',
+        default: false,
+        description: 'Whether to invalidate cached CDN copies of the asset',
+        displayOptions: {
+                show: {
+                        resource: ['updateAsset'],
+                        operation: ['destroy'],
+                },
+        },
+      },
+      {
+        displayName: 'Resource Type',
+        name: 'getTagsResourceType',
+        type: 'options',
 				options: [
 					{
 						name: 'Image',
